@@ -5,34 +5,41 @@
     <title>春季气候水文驱动机制</title>
     <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
     <style>
-        body {
+        html, body {
             margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden; /* 隐藏滚动条 */
             font-family: Arial, sans-serif;
         }
-        #springChart {
+        #radarChart {
             width: 100%;
-            height: 300px;
+            height: 100%;
         }
     </style>
 </head>
 <body>
-    <div id="springChart"></div>
+    <!-- 雷达图容器：全屏显示 -->
+    <div id="radarChart"></div>
+
     <script type="text/javascript">
         const radarData = [0.251, -0.019, -0.112];
-        var chart = echarts.init(document.getElementById('springChart'));
+
+        // 初始化图表
+        var chart = echarts.init(document.getElementById('radarChart'));
+
         var option = {
             title: {
-                text: 'Spring',
-                left: 'center',
+                show: true // 隐藏标题
             },
             tooltip: {},
             radar: {
                 shape: 'circle',
                 startAngle: 90,
                 indicator: [
-                    { text: '降水P', max: 0.8 },
-                    { text: '温度T', max: 0.8 },
-                    { text: '流量Q', max: 0.8 }
+                    { text: '降水P', max: 0.5 },
+                    { text: '温度T', max: 0.5 },
+                    { text: '流量Q', max: 0.5 }
                 ],
                 center: ['50%', '60%'],
                 radius: '60%'
@@ -47,7 +54,13 @@
                 areaStyle: {}
             }]
         };
+
         chart.setOption(option);
+
+        // 自适应窗口大小变化
+        window.addEventListener('resize', function () {
+            chart.resize();
+        });
     </script>
 </body>
 </html>
